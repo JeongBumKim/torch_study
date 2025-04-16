@@ -1,35 +1,52 @@
-from PIL import Image
 import torch
-from torchvision import transforms
+from torch.utils.data import Dataset
+from torchvision import datasets
+from torchvision.transforms import ToTensor
+import matplotlib.pyplot as plt
+from torch import nn
 
-# 디바이스 설정
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = (
+    "cuda"
+    if torch.cuda.is_available()
+    else "mps"
+    if torch.backends.mps.is_available()
+    else "cpu"
+)
+print(f"Using {device} device")
 
-# 저장된 모델 불러오기
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.flatten = nn.Flatten()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(28*28, 512),
+            nn.ReLU(),
+            nn.Linear(512, 512),
+            nn.ReLU(),
+            nn.Linear(512, 10),
+        )
+
+    def forward(self, x):
+        x = self.flatten(x)
+        logits = self.linear_relu_stack(x)
+        return logits
+
 model = NeuralNetwork().to(device)
-model.load_state_dict(torch.load("model.pth"))
-model.eval()
+print(model)
 
-# 이미지 전처리 정의
-transform = transforms.Compose([
-    transforms.Grayscale(),             # 흑백으로 변환
-    transforms.Resize((28, 28)),        # 크기 조정
-    transforms.ToTensor(),              # 텐서 변환 (0~1 정규화)
-])
+X = torch.rand(1, 28, 28, device=device)
+logits = model(X)
+pred_probab = nn.Softmax(dim=1)(logits)
+y_pred = pred_probab.argmax(1)
+print(f"Predicted class: {y_pred}")
 
-# 이미지 불러오기
-image = Image.open("test_image.png")   # 여기에 사용할 이미지 파일 경로
-image = transform(image).unsqueeze(0).to(device)  # 배치 차원 추가 + 디바이스 이동
+input_image = torch.rand(3,28,28)
+print(input_image.size())
 
-# 예측하기
-with torch.no_grad():
-    output = model(image)
-    predicted = torch.argmax(output, 1)
+flatten = nn.Flatten()
+flat_image = flatten(input_image)
+print(flat_image.size())
 
-# FashionMNIST 클래스 라벨
-labels = [
-    "T-Shirt/Top", "Trouser", "Pullover", "Dress", "Coat",
-    "Sandal", "Shirt", "Sneaker", "Bag", "Ankle Boot"
-]
-
-print(f"예측 결과: {labels[predicted.item()]}")
+layer1 = nn.Linear(in_features=28*28, out_features=20)
+hidden1 = layer1(flat_image)
+print(hidden1.size())
