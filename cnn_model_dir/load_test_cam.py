@@ -19,7 +19,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # 모델 불러오기
 model = get_model(num_classes=len(classes))
-model.load_state_dict(torch.load("faster_rcnn_cup.pth", map_location=device))
+model.load_state_dict(torch.load("faster_rcnn_cup2.pth", map_location=device))
 model.to(device)
 model.eval()
 

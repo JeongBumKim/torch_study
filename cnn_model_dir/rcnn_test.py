@@ -6,9 +6,6 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as T
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
-
-
-
 from albumentations.pytorch import ToTensorV2
 import albumentations as A
 import cv2
@@ -27,7 +24,6 @@ transform = A.Compose([
     A.RandomBrightnessContrast(p=0.2),
     ToTensorV2()
 ], bbox_params=A.BboxParams(format='pascal_voc', label_fields=['category_ids']))
-
 
 
 # Augmented Dataset 정의

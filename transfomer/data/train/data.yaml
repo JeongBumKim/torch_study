@@ -1,0 +1,5 @@
+names:
+- sirbot
+nc: 1
+train: /home/rgt/jb_ws/torch_study/transfomer/data/train/images
+val: /home/rgt/jb_ws/torch_study/transfomer/data/train/images

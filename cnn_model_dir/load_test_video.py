@@ -59,13 +59,13 @@ while cap.isOpened():
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
     # 출력
-    # cv2.imshow("Detection", frame)
+    cv2.imshow("Detection", frame)
     if save_output:
         out.write(frame)
 
     # 'q' 누르면 종료
-    # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #     break
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 print("score_sum :" , score_sum)
 cap.release()
 if save_output:

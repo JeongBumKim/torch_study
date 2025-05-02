@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['items']
+
+roboflow:
+  workspace: yolotest-fh0tf
+  project: custom-workflow-object-detection-lhds0
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/yolotest-fh0tf/custom-workflow-object-detection-lhds0/dataset/1

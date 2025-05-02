@@ -12,7 +12,6 @@ X = torch.tensor(values)
 
 y = 2 * X + 1
 
-
 # 2. 모델 정의: 단순 선형 회귀 (Linear 1층)
 model = nn.Linear(1, 1)
 
@@ -42,9 +41,6 @@ predicted = model(test_input).item()
 print(f"\n예측: x=4 → y={predicted:.4f}")
 
 torch.save(model.state_dict(), "linear_model/linear_model.pth")
-
-
-
 
 epochs = list(range(len(loss_list)))
 # 그래프 그리기
